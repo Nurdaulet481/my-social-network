@@ -3,265 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Социальная сеть — Учебный проект</title>
+  <title>Студенческая Сеть</title>
   
-  <!-- 1. Внешние библиотеки (CSS & Иконки) -->
-  <!-- Tailwind CSS: Готовый фреймворк стилей, использующий классы типа bg-white, text-center, flex -->
+  <!-- Tailwind CSS (Фреймворк для стилей) -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Lucide Icons: Набор иконка-векторов (search, user, message-square) -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- 2. Наши пользовательские стили из той же папки -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Наш файл стилей -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
-  <!-- ========================================================================= -->
-  <!-- ШАПКА САЙТА (HEADER)                                                      -->
-  <!-- Верхняя панель с логотипом и переключателем активного пользователя         -->
-  <!-- ========================================================================= -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+  <!-- ШАПКА САЙТА -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
     <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
       
-      <!-- Логотип и название соцсети -->
-      <div class="flex items-center gap-2">
-        <!-- Квадратная синяя иконка с буквой S -->
+      <!-- Логотип -->
+      <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md">
           S
         </div>
         <div>
-          <h1 class="font-bold text-slate-900 leading-tight">Простая Соцсеть</h1>
-          <p class="text-[11px] text-slate-500">Понятная структура (HTML + CSS + JS)</p>
+          <h1 class="font-bold text-slate-900 leading-tight text-sm sm:text-base">Студенческая Сеть</h1>
+          <p class="text-[11px] text-slate-500">Прототип с раздельными JS/CSS</p>
         </div>
       </div>
 
-      <!-- Переключатель роли (Войти под разным аккаунтом для теста) -->
+      <!-- Выбор текущего пользователя -->
       <div class="flex items-center gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200">
-        <i data-lucide="user-cog" class="w-4 h-4 text-indigo-600"></i>
-        <span class="text-xs font-medium text-slate-600 hidden sm:inline">Вы зашли как:</span>
-        
-        <!-- id="user-select": Сюда app.js подставляет динамический список юзеров из db.js -->
-        <!-- onchange="switchUser(this.value)": Вызывается при выборе другого человека -->
-        <select 
-          id="user-select" 
-          onchange="switchUser(this.value)"
-          class="text-xs font-semibold bg-white border border-slate-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer"
-        >
-          <!-- Элементы <option> загружаются автоматически через JS -->
+        <span class="text-xs font-medium text-slate-600 hidden sm:inline">Войти как:</span>
+        <select id="user-select" onchange="switchUser(this.value)" class="text-xs font-semibold bg-white border border-slate-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+          <!-- Динамически заполняется из db.js -->
         </select>
       </div>
 
     </div>
   </header>
 
-  <!-- ========================================================================= -->
-  <!-- ОСНОВНОЙ КОНТЕНТ (MAIN)                                                   -->
-  <!-- Включает в себя вкладки навигации и 4 основных блока страниц             -->
-  <!-- ========================================================================= -->
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="max-w-4xl w-full mx-auto p-4 flex-1 flex flex-col gap-4">
-    
-    <!-- ----------------------------------------------------------------------- -->
-    <!-- КНОПКИ НАВИГАЦИИ (ВКЛАДКИ)                                              -->
-    <!-- При клике вызывают функцию setActiveTab('имя_вкладки') в app.js          -->
-    <!-- ----------------------------------------------------------------------- -->
+
+    <!-- НАВИГАЦИОННЫЕ ВКЛАДКИ -->
     <nav class="flex bg-white rounded-xl p-1.5 border border-slate-200 shadow-sm gap-1">
-      
-      <!-- Вкладка 1: Поиск -->
-      <button 
-        id="tab-btn-search" 
-        onclick="setActiveTab('search')"
-        class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white shadow"
-      >
-        <i data-lucide="search" class="w-4 h-4"></i>
+      <button id="tab-btn-search" onclick="setActiveTab('search')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white shadow">
         <span>Поиск людей</span>
       </button>
-
-      <!-- Вкладка 2: Сообщения (Чат) -->
-      <button 
-        id="tab-btn-chat" 
-        onclick="setActiveTab('chat')"
-        class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100"
-      >
-        <i data-lucide="message-square" class="w-4 h-4"></i>
+      <button id="tab-btn-chat" onclick="setActiveTab('chat')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100">
         <span>Сообщения</span>
       </button>
-
-      <!-- Вкладка 3: Мой Профиль -->
-      <button 
-        id="tab-btn-profile" 
-        onclick="setActiveTab('profile')"
-        class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100"
-      >
-        <i data-lucide="user" class="w-4 h-4"></i>
+      <button id="tab-btn-profile" onclick="setActiveTab('profile')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100">
         <span>Мой Профиль</span>
       </button>
-
-      <!-- Вкладка 4: Просмотр сырой Базы Данных -->
-      <button 
-        id="tab-btn-db_view" 
-        onclick="setActiveTab('db_view')"
-        class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100"
-      >
-        <i data-lucide="database" class="w-4 h-4"></i>
+      <button id="tab-btn-db_view" onclick="setActiveTab('db_view')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100">
         <span>База Данных (DB)</span>
       </button>
-
     </nav>
 
-    <!-- ----------------------------------------------------------------------- -->
-    <!-- СЕКЦИЯ 1: ПОИСК ПОЛЬЗОВАТЕЛЕЙ                                           -->
-    <!-- ----------------------------------------------------------------------- -->
+    <!-- СЕКЦИЯ 1: ПОИСК ПОЛЬЗОВАТЕЛЕЙ -->
     <section id="tab-search" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
       <div>
         <h2 class="text-base font-bold text-slate-900">Поиск пользователей</h2>
-        <p class="text-xs text-slate-500">Найдите человека по никнейму или имени и подпишитесь</p>
+        <p class="text-xs text-slate-500">Найдите человека по username или имени и подпишитесь</p>
       </div>
 
-      <!-- Поле ввода текста для поиска -->
       <div class="relative">
-        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-        <!-- oninput="handleSearch(this.value)": Отправляет введенный текст в JS при каждом нажатии клавиши -->
         <input 
           type="text" 
-          id="search-input"
+          placeholder="Введите username или имя..." 
           oninput="handleSearch(this.value)"
-          placeholder="Введите username или имя..."
-          class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
+          class="w-full px-4 py-2.5 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
         />
       </div>
 
-      <!-- Сюда JS вставляет карточки людей: <div id="search-results-list"> -->
       <div id="search-results-list" class="space-y-3 pt-2">
-        <!-- Результаты генерируются через функцию renderSearch() в app.js -->
+        <!-- Результаты генерируются через app.js -->
       </div>
     </section>
 
-    <!-- ----------------------------------------------------------------------- -->
-    <!-- СЕКЦИЯ 2: ЧАТ И ЛИЧНЫЕ СООБЩЕНИЯ                                        -->
-    <!-- ----------------------------------------------------------------------- -->
+    <!-- СЕКЦИЯ 2: ЧАТ И СООБЩЕНИЯ -->
     <section id="tab-chat" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-12 min-h-[480px] overflow-hidden">
       
-      <!-- Спискок собеседников (Левая колонка) -->
+      <!-- Список контактов слева -->
       <div class="md:col-span-4 border-r border-slate-200 p-3 space-y-2 bg-slate-50/50">
         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-2 py-1">Контакты</h3>
-        
-        <!-- Сюда вставляются кнопки с пользователями -->
         <div id="chat-contacts-list" class="space-y-1">
-          <!-- Заполняется через функцию renderChat() в app.js -->
+          <!-- Список собеседников -->
         </div>
       </div>
 
-      <!-- Окно переписки (Правая колонка) -->
+      <!-- Переписка справа -->
       <div class="md:col-span-8 flex flex-col justify-between bg-white">
         
-        <!-- Заголовок чата (Аватарка и имя текущего собеседника) -->
         <div id="chat-header" class="p-3.5 border-b border-slate-200 flex items-center justify-between bg-slate-50/30">
-          <!-- Заполняется динамически -->
+          <span class="text-xs text-slate-400">Выберите собеседника</span>
         </div>
 
-        <!-- Контейнер для списка сообщений (с вертикальной прокруткой) -->
-        <div id="chat-messages-container" class="p-4 flex-1 space-y-3 overflow-y-auto max-h-[340px] bg-slate-50/20 custom-scrollbar">
-          <!-- Сообщения генерируются через app.js -->
+        <div id="chat-messages-container" class="p-4 flex-1 space-y-3 overflow-y-auto max-h-[340px] custom-scrollbar bg-slate-50/20">
+          <!-- Сообщения -->
         </div>
 
-        <!-- Форма для ввода и отправки нового сообщения -->
-        <!-- onsubmit="sendMessage(event)": Перехватывает отправку и передает текст в db.js -->
-        <form id="chat-form" onsubmit="sendMessage(event)" class="p-3 border-t border-slate-200 flex gap-2">
+        <form onsubmit="sendMessage(event)" class="p-3 border-t border-slate-200 flex gap-2">
           <input 
-            type="text" 
             id="chat-message-input"
-            placeholder="Написать сообщение..."
+            type="text" 
+            placeholder="Напишите сообщение..." 
             class="flex-1 bg-slate-100 text-xs px-3.5 py-2.5 rounded-xl border border-transparent focus:border-indigo-500 focus:bg-white focus:outline-none transition-all"
           />
           <button 
-            type="submit"
-            class="px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all flex items-center gap-1 cursor-pointer"
-          >
-            <i data-lucide="send" class="w-3.5 h-3.5"></i>
-            <span>Отправить</span>
+            type="submit" 
+            class="px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all">
+            Отправить
           </button>
         </form>
 
       </div>
     </section>
 
-    <!-- ----------------------------------------------------------------------- -->
-    <!-- СЕКЦИЯ 3: ЛИЧНЫЙ ПРОФИЛЬ                                                -->
-    <!-- ----------------------------------------------------------------------- -->
+    <!-- СЕКЦИЯ 3: МОЙ ПРОФИЛЬ -->
     <section id="tab-profile" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-      
-      <!-- Шапка профиля: Аватарка, Имя, Bio -->
       <div id="profile-user-info" class="flex items-center gap-4">
-        <!-- Заполняется из db.users через renderProfile() -->
+        <!-- Информация о пользователе -->
       </div>
 
-      <!-- Отображение секретных данных из базы данных (Username, Password) -->
       <div class="border-t border-slate-100 pt-4 space-y-3">
-        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Данные из записи файла db.js</h3>
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Параметры аккаунта (Из базы данных db.js)</h3>
         
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <!-- Username -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <div class="flex items-center gap-1.5 text-slate-400 mb-1">
-              <i data-lucide="at-sign" class="w-3.5 h-3.5"></i>
-              <span>Username</span>
-            </div>
-            <p id="profile-username" class="font-mono font-bold text-slate-800">-</p>
+            <span class="text-slate-400 block mb-1">Username</span>
+            <p id="profile-username" class="font-mono font-bold text-slate-800"></p>
           </div>
 
-          <!-- Nickname -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <div class="flex items-center gap-1.5 text-slate-400 mb-1">
-              <i data-lucide="user" class="w-3.5 h-3.5"></i>
-              <span>Nickname</span>
-            </div>
-            <p id="profile-nickname" class="font-bold text-slate-800">-</p>
+            <span class="text-slate-400 block mb-1">Nickname</span>
+            <p id="profile-nickname" class="font-bold text-slate-800"></p>
           </div>
 
-          <!-- Password -->
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <div class="flex items-center gap-1.5 text-slate-400 mb-1">
-              <i data-lucide="key" class="w-3.5 h-3.5"></i>
-              <span>Password</span>
-            </div>
-            <p id="profile-password" class="font-mono font-bold text-indigo-600">-</p>
+            <span class="text-slate-400 block mb-1">Password</span>
+            <p id="profile-password" class="font-mono font-bold text-indigo-600"></p>
           </div>
         </div>
       </div>
 
-      <!-- Список текущих подписок юзера -->
       <div class="border-t border-slate-100 pt-4 space-y-3">
         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Мои подписки</h3>
         <div id="profile-follows-list" class="flex flex-wrap gap-2">
-          <!-- Заполняется карточками друзей из таблицы db.follows -->
+          <!-- Список подписок -->
         </div>
       </div>
-
     </section>
 
-    <!-- ----------------------------------------------------------------------- -->
-    <!-- СЕКЦИЯ 4: ИНСПЕКТОР БАЗЫ ДАННЫХ                                         -->
-    <!-- ----------------------------------------------------------------------- -->
+    <!-- СЕКЦИЯ 4: ИНСПЕКТОР БАЗЫ ДАННЫХ -->
     <section id="tab-db_view" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-5 space-y-3 font-mono shadow-md">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3">
         <div>
-          <h3 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
-            <i data-lucide="database" class="w-4 h-4"></i>
-            Текущий объект базы данных (db.js)
-          </h3>
+          <h3 class="text-sm font-bold text-emerald-400">Объект базы данных (js/db.js)</h3>
           <p class="text-[11px] text-slate-400 font-sans mt-0.5">
-            При добавлении сообщений или подписок этот файл обновляется в реальном времени!
+            Данные обновляются в реальном времени при отправке сообщений или клике «Подписаться»
           </p>
         </div>
       </div>
 
-      <!-- Текстовое поле для красивого вывода JSON -->
       <pre id="db-json-preview" class="text-xs bg-slate-950 p-4 rounded-xl overflow-x-auto text-emerald-300 leading-relaxed border border-slate-800"></pre>
     </section>
 
   </main>
 
-  <!-- ========================================================================= -->
-  <!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ (ПОДОБРАН ПРАВИЛЬНЫЙ ПОРЯДОК!)                       -->
-  <!-- =
+  <!-- СНАЧАЛА ПОДПЛЮЧАЕМ БАЗУ ДАННЫХ (db.js), ЗАТЕМ ЛОГИКУ (app.js) -->
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
