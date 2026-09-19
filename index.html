@@ -1,176 +1,766 @@
+```html
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Студенческая Сеть</title>
-  
-  <!-- Tailwind CSS (Фреймворк для стилей) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Наш файл стилей -->
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Social Network</title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
-  <!-- ШАПКА САЙТА -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
-    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-      
-      <!-- Логотип -->
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md">
-          S
-        </div>
-        <div>
-          <h1 class="font-bold text-slate-900 leading-tight text-sm sm:text-base">Студенческая Сеть</h1>
-          <p class="text-[11px] text-slate-500">Прототип с раздельными JS/CSS</p>
-        </div>
-      </div>
+<body>
 
-      <!-- Выбор текущего пользователя -->
-      <div class="flex items-center gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200">
-        <span class="text-xs font-medium text-slate-600 hidden sm:inline">Войти как:</span>
-        <select id="user-select" onchange="switchUser(this.value)" class="text-xs font-semibold bg-white border border-slate-300 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-          <!-- Динамически заполняется из db.js -->
-        </select>
-      </div>
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="header">
+
+        <div class="header-left">
+            <a href="#" class="logo" id="logo">
+                MySocial
+            </a>
+        </div>
+
+        <div class="header-center">
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search users..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    id="search-button"
+                    aria-label="Search"
+                >
+                    🔍
+                </button>
+            </div>
+        </div>
+
+        <div class="header-right">
+
+            <button
+                type="button"
+                class="header-button"
+                id="messages-button"
+            >
+                Messages
+            </button>
+
+            <button
+                type="button"
+                class="header-button"
+                id="profile-button"
+            >
+                Profile
+            </button>
+
+            <button
+                type="button"
+                class="header-button"
+                id="logout-button"
+            >
+                Log out
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN APPLICATION
+    ========================== -->
+
+    <main class="app">
+
+        <!-- =====================
+             SIDEBAR
+        ====================== -->
+
+        <aside class="sidebar">
+
+            <nav class="navigation">
+
+                <button
+                    type="button"
+                    class="nav-item active"
+                    data-page="home"
+                >
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-page="search"
+                >
+                    <span class="nav-icon">🔎</span>
+                    <span>Search</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-page="messages"
+                >
+                    <span class="nav-icon">💬</span>
+                    <span>Messages</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="nav-item"
+                    data-page="profile"
+                >
+                    <span class="nav-icon">👤</span>
+                    <span>Profile</span>
+                </button>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- =====================
+             CONTENT
+        ====================== -->
+
+        <section class="content">
+
+            <!-- =================
+                 HOME PAGE
+            ================== -->
+
+            <section
+                class="page active"
+                id="home-page"
+            >
+
+                <div class="page-header">
+                    <h1>Home</h1>
+                    <p>Welcome to MySocial</p>
+                </div>
+
+
+                <div class="home-feed" id="home-feed">
+
+                    <!-- Posts will be loaded here by JavaScript -->
+
+                    <div class="empty-state">
+                        <h2>Welcome!</h2>
+                        <p>
+                            Your feed will appear here.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================
+                 SEARCH PAGE
+            ================== -->
+
+            <section
+                class="page"
+                id="search-page"
+            >
+
+                <div class="page-header">
+                    <h1>Search</h1>
+                    <p>Find other users</p>
+                </div>
+
+
+                <div class="search-page-box">
+
+                    <input
+                        type="text"
+                        id="user-search-input"
+                        placeholder="Search by username..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="user-search-button"
+                    >
+                        Search
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="search-results"
+                    id="search-results"
+                >
+
+                    <div class="empty-state">
+                        <p>
+                            Search for a user to see results.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================
+                 MESSAGES PAGE
+            ================== -->
+
+            <section
+                class="page"
+                id="messages-page"
+            >
+
+                <div class="page-header">
+                    <h1>Messages</h1>
+                    <p>Your conversations</p>
+                </div>
+
+
+                <div class="messages-layout">
+
+                    <!-- Conversations -->
+
+                    <aside
+                        class="conversations"
+                        id="conversations"
+                    >
+
+                        <div class="empty-state">
+                            <p>
+                                No conversations yet.
+                            </p>
+                        </div>
+
+                    </aside>
+
+
+                    <!-- Current conversation -->
+
+                    <div class="chat">
+
+                        <div
+                            class="chat-header"
+                            id="chat-header"
+                        >
+                            <span>
+                                Select a conversation
+                            </span>
+                        </div>
+
+
+                        <div
+                            class="chat-messages"
+                            id="chat-messages"
+                        >
+
+                            <div class="empty-state">
+                                <p>
+                                    Select a user to start chatting.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <form
+                            class="message-form"
+                            id="message-form"
+                        >
+
+                            <input
+                                type="text"
+                                id="message-input"
+                                placeholder="Write a message..."
+                                autocomplete="off"
+                                disabled
+                            >
+
+                            <button
+                                type="submit"
+                                id="send-message-button"
+                                disabled
+                            >
+                                Send
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================
+                 PROFILE PAGE
+            ================== -->
+
+            <section
+                class="page"
+                id="profile-page"
+            >
+
+                <div class="page-header">
+                    <h1>Profile</h1>
+                    <p>Your account</p>
+                </div>
+
+
+                <div class="profile-card">
+
+                    <div class="profile-avatar">
+                        <span id="profile-avatar-letter">
+                            ?
+                        </span>
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <h2 id="profile-username">
+                            Loading...
+                        </h2>
+
+                        <p id="profile-email">
+                            Loading...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-stats">
+
+                    <div class="stat">
+                        <strong id="followers-count">
+                            0
+                        </strong>
+
+                        <span>
+                            Followers
+                        </span>
+                    </div>
+
+
+                    <div class="stat">
+                        <strong id="following-count">
+                            0
+                        </strong>
+
+                        <span>
+                            Following
+                        </span>
+                    </div>
+
+
+                    <div class="stat">
+                        <strong id="posts-count">
+                            0
+                        </strong>
+
+                        <span>
+                            Posts
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="profile-actions">
+
+                    <button
+                        type="button"
+                        id="edit-profile-button"
+                    >
+                        Edit profile
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================
+                 USER PROFILE PAGE
+            ================== -->
+
+            <section
+                class="page"
+                id="user-profile-page"
+            >
+
+                <button
+                    type="button"
+                    class="back-button"
+                    id="back-from-user-profile"
+                >
+                    ← Back
+                </button>
+
+
+                <div class="user-profile-card">
+
+                    <div class="profile-avatar">
+                        <span id="user-profile-avatar-letter">
+                            ?
+                        </span>
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <h2 id="user-profile-username">
+                            User
+                        </h2>
+
+                        <p id="user-profile-email">
+                            —
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="follow-button"
+                    >
+                        Follow
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="open-chat-button"
+                    >
+                        Message
+                    </button>
+
+                </div>
+
+
+                <div class="profile-stats">
+
+                    <div class="stat">
+
+                        <strong id="user-followers-count">
+                            0
+                        </strong>
+
+                        <span>
+                            Followers
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <strong id="user-following-count">
+                            0
+                        </strong>
+
+                        <span>
+                            Following
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <strong id="user-posts-count">
+                            0
+                        </strong>
+
+                        <span>
+                            Posts
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         LOGIN MODAL
+    ========================== -->
+
+    <div
+        class="modal hidden"
+        id="login-modal"
+    >
+
+        <div class="modal-content">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="login-close"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <h2>Log in</h2>
+
+            <p>
+                Welcome back.
+            </p>
+
+
+            <form id="login-form">
+
+                <label for="login-email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="login-email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                >
+
+
+                <label for="login-password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="login-password"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                >
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Log in
+                </button>
+
+            </form>
+
+
+            <p class="form-message" id="login-message"></p>
+
+        </div>
 
     </div>
-  </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
-  <main class="max-w-4xl w-full mx-auto p-4 flex-1 flex flex-col gap-4">
 
-    <!-- НАВИГАЦИОННЫЕ ВКЛАДКИ -->
-    <nav class="flex bg-white rounded-xl p-1.5 border border-slate-200 shadow-sm gap-1">
-      <button id="tab-btn-search" onclick="setActiveTab('search')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white shadow">
-        <span>Поиск людей</span>
-      </button>
-      <button id="tab-btn-chat" onclick="setActiveTab('chat')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100">
-        <span>Сообщения</span>
-      </button>
-      <button id="tab-btn-profile" onclick="setActiveTab('profile')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100">
-        <span>Мой Профиль</span>
-      </button>
-      <button id="tab-btn-db_view" onclick="setActiveTab('db_view')" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all text-slate-600 hover:bg-slate-100">
-        <span>База Данных (DB)</span>
-      </button>
-    </nav>
+    <!-- =========================
+         REGISTER MODAL
+    ========================== -->
 
-    <!-- СЕКЦИЯ 1: ПОИСК ПОЛЬЗОВАТЕЛЕЙ -->
-    <section id="tab-search" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
-      <div>
-        <h2 class="text-base font-bold text-slate-900">Поиск пользователей</h2>
-        <p class="text-xs text-slate-500">Найдите человека по username или имени и подпишитесь</p>
-      </div>
+    <div
+        class="modal hidden"
+        id="register-modal"
+    >
 
-      <div class="relative">
-        <input 
-          type="text" 
-          placeholder="Введите username или имя..." 
-          oninput="handleSearch(this.value)"
-          class="w-full px-4 py-2.5 text-sm bg-slate-50 rounded-xl border border-slate-200 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all"
-        />
-      </div>
+        <div class="modal-content">
 
-      <div id="search-results-list" class="space-y-3 pt-2">
-        <!-- Результаты генерируются через app.js -->
-      </div>
-    </section>
+            <button
+                type="button"
+                class="modal-close"
+                id="register-close"
+                aria-label="Close"
+            >
+                ×
+            </button>
 
-    <!-- СЕКЦИЯ 2: ЧАТ И СООБЩЕНИЯ -->
-    <section id="tab-chat" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-12 min-h-[480px] overflow-hidden">
-      
-      <!-- Список контактов слева -->
-      <div class="md:col-span-4 border-r border-slate-200 p-3 space-y-2 bg-slate-50/50">
-        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-2 py-1">Контакты</h3>
-        <div id="chat-contacts-list" class="space-y-1">
-          <!-- Список собеседников -->
+
+            <h2>Create account</h2>
+
+            <p>
+                Join MySocial.
+            </p>
+
+
+            <form id="register-form">
+
+                <label for="register-username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="register-username"
+                    name="username"
+                    required
+                    minlength="3"
+                    maxlength="30"
+                    autocomplete="username"
+                >
+
+
+                <label for="register-email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="register-email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                >
+
+
+                <label for="register-password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="register-password"
+                    name="password"
+                    required
+                    minlength="8"
+                    autocomplete="new-password"
+                >
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Create account
+                </button>
+
+            </form>
+
+
+            <p
+                class="form-message"
+                id="register-message"
+            ></p>
+
         </div>
-      </div>
 
-      <!-- Переписка справа -->
-      <div class="md:col-span-8 flex flex-col justify-between bg-white">
-        
-        <div id="chat-header" class="p-3.5 border-b border-slate-200 flex items-center justify-between bg-slate-50/30">
-          <span class="text-xs text-slate-400">Выберите собеседника</span>
+    </div>
+
+
+    <!-- =========================
+         EDIT PROFILE MODAL
+    ========================== -->
+
+    <div
+        class="modal hidden"
+        id="edit-profile-modal"
+    >
+
+        <div class="modal-content">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="edit-profile-close"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <h2>Edit profile</h2>
+
+
+            <form id="edit-profile-form">
+
+                <label for="edit-username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-username"
+                    name="username"
+                    required
+                    minlength="3"
+                    maxlength="30"
+                >
+
+
+                <label for="edit-bio">
+                    Bio
+                </label>
+
+                <textarea
+                    id="edit-bio"
+                    name="bio"
+                    maxlength="500"
+                    rows="4"
+                    placeholder="Tell people about yourself..."
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Save changes
+                </button>
+
+            </form>
+
+
+            <p
+                class="form-message"
+                id="edit-profile-message"
+            ></p>
+
         </div>
 
-        <div id="chat-messages-container" class="p-4 flex-1 space-y-3 overflow-y-auto max-h-[340px] custom-scrollbar bg-slate-50/20">
-          <!-- Сообщения -->
-        </div>
+    </div>
 
-        <form onsubmit="sendMessage(event)" class="p-3 border-t border-slate-200 flex gap-2">
-          <input 
-            id="chat-message-input"
-            type="text" 
-            placeholder="Напишите сообщение..." 
-            class="flex-1 bg-slate-100 text-xs px-3.5 py-2.5 rounded-xl border border-transparent focus:border-indigo-500 focus:bg-white focus:outline-none transition-all"
-          />
-          <button 
-            type="submit" 
-            class="px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all">
-            Отправить
-          </button>
-        </form>
 
-      </div>
-    </section>
+    <!-- =========================
+         NOTIFICATION
+    ========================== -->
 
-    <!-- СЕКЦИЯ 3: МОЙ ПРОФИЛЬ -->
-    <section id="tab-profile" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-      <div id="profile-user-info" class="flex items-center gap-4">
-        <!-- Информация о пользователе -->
-      </div>
+    <div
+        class="notification hidden"
+        id="notification"
+        role="alert"
+    >
+        <span id="notification-message"></span>
+    </div>
 
-      <div class="border-t border-slate-100 pt-4 space-y-3">
-        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Параметры аккаунта (Из базы данных db.js)</h3>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <span class="text-slate-400 block mb-1">Username</span>
-            <p id="profile-username" class="font-mono font-bold text-slate-800"></p>
-          </div>
 
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <span class="text-slate-400 block mb-1">Nickname</span>
-            <p id="profile-nickname" class="font-bold text-slate-800"></p>
-          </div>
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
 
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-            <span class="text-slate-400 block mb-1">Password</span>
-            <p id="profile-password" class="font-mono font-bold text-indigo-600"></p>
-          </div>
-        </div>
-      </div>
+    <script src="js/app.js"></script>
 
-      <div class="border-t border-slate-100 pt-4 space-y-3">
-        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Мои подписки</h3>
-        <div id="profile-follows-list" class="flex flex-wrap gap-2">
-          <!-- Список подписок -->
-        </div>
-      </div>
-    </section>
-
-    <!-- СЕКЦИЯ 4: ИНСПЕКТОР БАЗЫ ДАННЫХ -->
-    <section id="tab-db_view" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-5 space-y-3 font-mono shadow-md">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <div>
-          <h3 class="text-sm font-bold text-emerald-400">Объект базы данных (js/db.js)</h3>
-          <p class="text-[11px] text-slate-400 font-sans mt-0.5">
-            Данные обновляются в реальном времени при отправке сообщений или клике «Подписаться»
-          </p>
-        </div>
-      </div>
-
-      <pre id="db-json-preview" class="text-xs bg-slate-950 p-4 rounded-xl overflow-x-auto text-emerald-300 leading-relaxed border border-slate-800"></pre>
-    </section>
-
-  </main>
-
-  <!-- СНАЧАЛА ПОДПЛЮЧАЕМ БАЗУ ДАННЫХ (db.js), ЗАТЕМ ЛОГИКУ (app.js) -->
-  <script src="js/db.js"></script>
-  <script src="js/app.js"></script>
 </body>
 </html>
+```
